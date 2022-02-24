@@ -9,14 +9,58 @@ import UIKit
 
 class NewNoteViewController: UIViewController {
 
+    @IBOutlet weak var headerTF: UITextField!
+    @IBOutlet weak var textNoteLabel: UITextView!
+    var currentNote: Note?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupEditScreen()
     }
     
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
         view.endEditing(true)
+    }
+    
+    private func saveNote() {
+        guard let text = textNoteLabel.text else { return }
+        if text.isEmpty { return }
+        guard var header = headerTF.text else { return }
+        if header.isEmpty {
+            let words = text.split(separator: " ")
+            if words.count >= 2 {
+                header = String(words[0]) + " " + String(words[1])
+            } else {
+                header = text
+            }
+        }
+        
+        let newNote = Note(text: text, header: header, date: Date())
+        if currentNote != nil {
+            try! realm.write {
+                currentNote?.text = text
+                currentNote?.header = header
+            }
+        } else {
+            StorageManager.saveObject(newNote)
+        }
+    }
+
+    private func setupEditScreen() {
+        if currentNote != nil {
+            textNoteLabel.text = currentNote?.text
+            headerTF.text = currentNote?.header
+            title = "Редактирование"
+        }
+    }
+    
+    @IBAction func exitButtonPressed(_ sender: Any) {
+        saveNote()
+        if currentNote != nil {
+            self.navigationController?.popViewController(animated: true)
+        } else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func addImagePressed(_ sender: Any) {
@@ -38,18 +82,6 @@ class NewNoteViewController: UIViewController {
         
         present(actionSheet, animated: true)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
 extension NewNoteViewController {
