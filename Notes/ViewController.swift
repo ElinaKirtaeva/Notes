@@ -15,6 +15,11 @@ class ViewController: UIViewController {
     }
 
 
+    @IBAction func addTask(_ sender: Any) {
+    }
+    
+    @IBAction func cancelAction(_ segue: UIStoryboardSegue) {
+    }
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {

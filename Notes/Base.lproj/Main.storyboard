@@ -53,11 +53,82 @@
                             <constraint firstItem="2Ud-wb-LAq" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vK9-nP-CAf"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Мои заметки" id="woN-p6-8BD"/>
+                    <navigationItem key="navigationItem" title="Мои заметки" id="woN-p6-8BD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="gmO-AR-tll">
+                            <connections>
+                                <action selector="addTask:" destination="BYZ-38-t0r" id="PMk-TT-iya"/>
+                                <segue destination="9Ox-IQ-vbf" kind="presentation" id="8kL-ft-ips"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="939.13043478260875" y="65.625"/>
+        </scene>
+        <!--Новая заметка-->
+        <scene sceneID="Mvf-FL-ySd">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="0cL-Tj-yXq" customClass="NewNoteViewController" customModule="Notes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aHQ-c3-vOU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="4F5-a8-9mM">
+                                <rect key="frame" x="20" y="88" width="374" height="720"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K7y-h1-b3B">
+                                <rect key="frame" x="0.0" y="816" width="414" height="46"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxh-Qf-mVg">
+                                        <rect key="frame" x="19" y="7" width="49" height="31"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="camera" catalog="system" title=""/>
+                                        <connections>
+                                            <action selector="addImagePressed:" destination="0cL-Tj-yXq" eventType="touchUpInside" id="qsM-23-X8o"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="QVr-Uv-LBc"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="mvX-qM-YQj"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mvX-qM-YQj" firstAttribute="bottom" secondItem="K7y-h1-b3B" secondAttribute="bottom" id="0bv-dA-Stt"/>
+                            <constraint firstItem="4F5-a8-9mM" firstAttribute="top" secondItem="mvX-qM-YQj" secondAttribute="top" id="1wL-Sq-RPV"/>
+                            <constraint firstItem="4F5-a8-9mM" firstAttribute="leading" secondItem="mvX-qM-YQj" secondAttribute="leading" constant="20" id="3k1-Vy-eci"/>
+                            <constraint firstItem="K7y-h1-b3B" firstAttribute="leading" secondItem="mvX-qM-YQj" secondAttribute="leading" id="Vz8-k8-wXZ"/>
+                            <constraint firstItem="mvX-qM-YQj" firstAttribute="trailing" secondItem="4F5-a8-9mM" secondAttribute="trailing" constant="20" id="fja-N8-yVI"/>
+                            <constraint firstItem="K7y-h1-b3B" firstAttribute="trailing" secondItem="mvX-qM-YQj" secondAttribute="trailing" id="gwZ-Tb-Ivw"/>
+                            <constraint firstItem="K7y-h1-b3B" firstAttribute="top" secondItem="4F5-a8-9mM" secondAttribute="bottom" constant="8" symbolic="YES" id="wVy-0F-Dnx"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Новая заметка" id="Obp-kc-y8B">
+                        <barButtonItem key="leftBarButtonItem" title="Заметки" image="chevron.left" catalog="system" id="4AO-j7-1L0">
+                            <connections>
+                                <segue destination="oxi-Gq-u95" kind="unwind" unwindAction="cancelAction:" id="i2A-68-lrd"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Готово" id="pIG-h2-ESN">
+                            <connections>
+                                <action selector="donePressed:" destination="0cL-Tj-yXq" id="P1I-Vf-UK0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Bu-Ib-Uky" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="oxi-Gq-u95" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2557.971014492754" y="65.625"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DVG-fZ-Ce8">
@@ -67,6 +138,9 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RGW-xW-wG8">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="ArialHebrew" family="Arial Hebrew" pointSize="22"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -77,8 +151,34 @@
             </objects>
             <point key="canvasLocation" x="28.985507246376812" y="65.625"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NGi-WN-niC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="9Ox-IQ-vbf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tpO-qq-JNx">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" name="ArialHebrew" family="Arial Hebrew" pointSize="20"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0cL-Tj-yXq" kind="relationship" relationship="rootViewController" id="5zK-Yi-nmF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C3a-0u-rg2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1647.826086956522" y="65.625"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="camera" catalog="system" width="128" height="94"/>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
