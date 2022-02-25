@@ -21,6 +21,8 @@ class NewNoteViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         setupEditScreen()
         textTF.delegate = self
+        textTF.textContainer.lineFragmentPadding = 0
+        textTF.textContainerInset = .zero
         doneBarButton = UIBarButtonItem(title: "Готово", style: .done, target: self, action: #selector(donePressed))
     }
     
