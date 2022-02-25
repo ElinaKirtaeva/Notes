@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewNoteViewController: UIViewController {
+class NewNoteViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var headerTF: UITextField!
     @IBOutlet weak var textNoteLabel: UITextView!
@@ -16,6 +16,7 @@ class NewNoteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEditScreen()
+        textNoteLabel.delegate = self
     }
     
     @IBAction func donePressed(_ sender: UIBarButtonItem) {
@@ -51,9 +52,33 @@ class NewNoteViewController: UIViewController {
             textNoteLabel.text = currentNote?.text
             headerTF.text = currentNote?.header
             title = "Редактирование"
+        } else {
+            textNoteLabel.text = "Заметка"
+            textNoteLabel.textColor = UIColor.lightGray
         }
     }
     
+    
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        if textNoteLabel.textColor == UIColor.lightGray {
+//            textNoteLabel.text = nil
+//            textNoteLabel.textColor = UIColor.black
+//        }
+//    }
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Заметка"
+            textView.textColor = UIColor.lightGray
+        }
+    }
+   
     @IBAction func exitButtonPressed(_ sender: Any) {
         saveNote()
         if currentNote != nil {
@@ -62,6 +87,7 @@ class NewNoteViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
         }
     }
+    
     
     @IBAction func addImagePressed(_ sender: Any) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
