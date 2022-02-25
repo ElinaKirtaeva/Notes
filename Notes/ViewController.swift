@@ -33,7 +33,9 @@ class ViewController: UIViewController {
         if segue.identifier == "showDetail" {
             guard let indexPath = table.indexPathForSelectedRow else { return }
             let note = notes[indexPath.row]
-            let newNoteVC = segue.destination as! NewNoteViewController
+            let navigationVC = segue.destination as! UINavigationController
+//            navigationVC.modalTransitionStyle = .coverVertical
+            let newNoteVC = navigationVC.topViewController as! NewNoteViewController
             newNoteVC.currentNote = note
         }
     }
@@ -45,6 +47,8 @@ class ViewController: UIViewController {
         newNote.date = Date()
         StorageManager.saveObject(newNote)
     }
+    
+    
 }
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
@@ -68,19 +72,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 
     }
     
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let note = notes[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _, _ in
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let note = notes[indexPath.row]
             StorageManager.deleteObject(note: note)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
-//        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { _, _, _ in
-//            StorageManager.deleteObject(note: note)
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//        }
-       
-        return [deleteAction]
     }
-    
-    
 }

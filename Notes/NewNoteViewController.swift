@@ -8,24 +8,28 @@
 import UIKit
 
 class NewNoteViewController: UIViewController, UITextViewDelegate {
-
-    @IBOutlet weak var headerTF: UITextField!
-    @IBOutlet weak var textNoteLabel: UITextView!
+    
     var currentNote: Note?
+    
+    @IBOutlet weak var headerTF: UITextField!
+    @IBOutlet weak var textTF: UITextView!
+    
+    private var doneBarButton: UIBarButtonItem!
+    private var isTextChanged = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupEditScreen()
-        textNoteLabel.delegate = self
+        textTF.delegate = self
+        doneBarButton = UIBarButtonItem(title: "Готово", style: .done, target: self, action: #selector(donePressed))
     }
     
-    @IBAction func donePressed(_ sender: UIBarButtonItem) {
+    @objc func donePressed() {
         view.endEditing(true)
     }
     
     private func saveNote() {
-        guard let text = textNoteLabel.text else { return }
-        if text.isEmpty { return }
+        guard let text = textTF.text, !text.isEmpty, isTextChanged else { return }
         guard var header = headerTF.text else { return }
         if header.isEmpty {
             let words = text.split(separator: " ")
@@ -36,25 +40,25 @@ class NewNoteViewController: UIViewController, UITextViewDelegate {
             }
         }
         
-        let newNote = Note(text: text, header: header, date: Date())
         if currentNote != nil {
             try! realm.write {
                 currentNote?.text = text
                 currentNote?.header = header
             }
         } else {
+            let newNote = Note(text: text, header: header, date: Date())
             StorageManager.saveObject(newNote)
         }
     }
 
     private func setupEditScreen() {
         if currentNote != nil {
-            textNoteLabel.text = currentNote?.text
+            textTF.text = currentNote?.text
             headerTF.text = currentNote?.header
             title = "Редактирование"
         } else {
-            textNoteLabel.text = "Заметка"
-            textNoteLabel.textColor = UIColor.lightGray
+            textTF.text = "Заметка"
+            textTF.textColor = UIColor.lightGray
         }
     }
     
@@ -70,22 +74,25 @@ class NewNoteViewController: UIViewController, UITextViewDelegate {
             textView.text = nil
             textView.textColor = UIColor.black
         }
+        self.navigationItem.rightBarButtonItem = doneBarButton
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Заметка"
             textView.textColor = UIColor.lightGray
+            isTextChanged = false
         }
+        self.navigationItem.rightBarButtonItem = nil
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        isTextChanged = true
     }
    
     @IBAction func exitButtonPressed(_ sender: Any) {
         saveNote()
-        if currentNote != nil {
-            self.navigationController?.popViewController(animated: true)
-        } else {
-            self.dismiss(animated: true, completion: nil)
-        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     

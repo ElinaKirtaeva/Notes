@@ -62,7 +62,7 @@
                                             <outlet property="dateLabel" destination="a2m-3q-QQx" id="6BY-Iq-kab"/>
                                             <outlet property="headerLabel" destination="xuf-aT-nVd" id="HZw-FE-YFS"/>
                                             <outlet property="noteLabel" destination="lU4-CE-0yV" id="atl-oR-V1h"/>
-                                            <segue destination="0cL-Tj-yXq" kind="show" identifier="showDetail" id="VQ8-ek-2ut"/>
+                                            <segue destination="9Ox-IQ-vbf" kind="showDetail" identifier="showDetail" id="Pcy-ee-Zs2"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -172,15 +172,10 @@
                                 <action selector="exitButtonPressed:" destination="0cL-Tj-yXq" id="pWi-q0-q4c"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Готово" id="pIG-h2-ESN">
-                            <connections>
-                                <action selector="donePressed:" destination="0cL-Tj-yXq" id="19y-2L-5OM"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="headerTF" destination="puz-Nk-iFH" id="Xsf-5d-UhZ"/>
-                        <outlet property="textNoteLabel" destination="4F5-a8-9mM" id="uJr-Nw-0fJ"/>
+                        <outlet property="textTF" destination="4F5-a8-9mM" id="UBN-uO-2DG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8Bu-Ib-Uky" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -232,7 +227,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5zK-Yi-nmF"/>
+        <segue reference="Pcy-ee-Zs2"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="camera" catalog="system" width="128" height="94"/>
